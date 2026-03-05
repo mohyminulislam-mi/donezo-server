@@ -32,6 +32,7 @@ async function run() {
     const usersCollections = database.collection("users");
     const analyticsCollections = database.collection("analytics");
     const productsCollections = database.collection("products");
+    const overviewCollections = database.collection("overview");
 
     app.get("/users", async (req, res) => {
       try {
@@ -53,6 +54,14 @@ async function run() {
       try {
         const products = await productsCollections.find().toArray();
         res.status(200).json(products);
+      } catch (error) {
+        res.status(500).json({ message: "Internal Server Error" });
+      }
+    });
+    app.get("/overview", async (req, res) => {
+      try {
+        const overview = await overviewCollections.find().toArray();
+        res.status(200).json(overview);
       } catch (error) {
         res.status(500).json({ message: "Internal Server Error" });
       }
